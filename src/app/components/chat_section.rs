@@ -18,7 +18,7 @@ pub fn ChatSection(cx: Scope, conversation: ReadSignal<Conversation>) -> impl In
     view! { cx,
         <div class="h-screen pb-24 w-full flex flex-col overflow-y-auto border border-gray-300 rounded p-5 bg-gray-100" node_ref=chat_div_ref>
           {move || conversation.get().messages.iter().map(move |message| {
-              let class_str = if message.user { USER_MESSAGE_CLASS } else { MODEL_MESSAGE_CLASS };
+              let class_str = if message.from_user { USER_MESSAGE_CLASS } else { MODEL_MESSAGE_CLASS };
               view! {cx,
                 <div class={class_str}>
                   {message.text.clone()}

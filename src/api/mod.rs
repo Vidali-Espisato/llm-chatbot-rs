@@ -28,7 +28,7 @@ pub async fn converse(cx: Scope, conversation: Conversation) -> Result<String, S
         let curr_user = if message.from_user { character_name } else { user_name };
         let curr_line = format!("{curr_user}: {msg}\n");
 
-        history.push(&curr_line);
+        history.push_str(&curr_line);
     }
 
     let mut res = String::new();
