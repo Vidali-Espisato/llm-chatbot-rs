@@ -4,7 +4,7 @@ use crate::model::conversation::Conversation;
 
 
 #[server(Converse "/api")]
-pub async fn converse(cx: Scope, conversation: Conversation) -> Result<(), ServerFnError>{
+pub async fn converse(cx: Scope, conversation: Conversation) -> Result<String, ServerFnError>{
     use llm::{ models::Llama, KnownModel };
     use leptos_actix::extract;
     use actix_web::web::Data;
@@ -43,7 +43,7 @@ pub async fn converse(cx: Scope, conversation: Conversation) -> Result<(), Serve
         &llm::InferenceRequest {
             prompt: format!("{persona}\n{history}\n{character_name}:")
                 .as_str().into(),
-            parameters: Some(&llm::InferenceParameters::default()),
+            parameters: &llm::InferenceParameters::default(),
             play_back_previous_tokens: false,
             maximum_token_count: None
         },
@@ -55,7 +55,7 @@ pub async fn converse(cx: Scope, conversation: Conversation) -> Result<(), Serve
         )
     ).unwrap_or_else(|e| panic!("{e}"));
 
-    Ok(())
+    Ok(res)
 }
 
 
