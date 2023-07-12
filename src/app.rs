@@ -1,7 +1,7 @@
 use leptos::*;
 use leptos_meta::*;
 
-use crate::model::conversation::{Conversation, Message};
+use crate::{model::conversation::{Conversation, Message}, api::converse};
 
 
 #[component]
@@ -18,6 +18,8 @@ pub fn App(cx: Scope) -> impl IntoView {
         set_conversation.update(move |c| {
             c.messages.push(user_message);
         });
+
+        converse(cx, conversation.get())
     });
 
     view! { cx,
