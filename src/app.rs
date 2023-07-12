@@ -1,6 +1,9 @@
 use leptos::*;
 use leptos_meta::*;
 
+mod components;
+use components::{chat_section::ChatSection, prompt_box::PromptBox};
+
 use crate::{model::conversation::{Conversation, Message}, api::converse};
 
 
@@ -37,6 +40,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     create_effect(cx, move |_| {
         if let Some(Ok(response)) = send.value().get() {
+            println!("{:?}", response);
             set_conversation.update(move |c| {
                 c.messages.last_mut().unwrap().text = response;
             });
@@ -50,6 +54,9 @@ pub fn App(cx: Scope) -> impl IntoView {
 
         // sets the document title
         <Title text="LLVM Chatbot"/>
+
+        <ChatSection conversation />
+        <PromptBox send />
     }
 }
 
